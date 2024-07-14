@@ -5,10 +5,10 @@ name: Build Android
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      # e.g., v1.0.0
-      - "v*"
+    inputs:
+      ref: 
+        type: string
+        required: true
 
 jobs:
   build:
@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
+          ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
 
       - name: Setup Node
