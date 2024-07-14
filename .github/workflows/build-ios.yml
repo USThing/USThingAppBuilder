@@ -17,6 +17,9 @@ jobs:
 
       - name: Setup repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.USTHING_GITHUB_TOKEN }}
+          repository: USThing/USThingApp
 
       - name: Setup node
         uses: actions/setup-node@v4
