@@ -1,0 +1,48 @@
+# References:
+# https://github.com/thomasread99/expo-workflows/
+
+name: Build iOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      # e.g., v1.0.0
+      - "v*"
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+
+      - name: Setup repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: yarn
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build iOS App
+        run: eas build --profile production --platform ios --local --non-interactive --output ${{ github.workspace }}/usthing-preview.ipa
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: ${{ github.workspace }}/usthing-preview.ipa
+
+      # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
+      - name: Submit to TestFlight
+        run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing-preview.ipa
