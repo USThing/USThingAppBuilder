@@ -53,5 +53,5 @@ jobs:
           path: ${{ github.workspace }}/usthing-preview.apk
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
-      - name: Submit to TestFlight
-        run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing-preview.aab
+      # - name: Submit to TestFlight
+      #   run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing-preview.aab

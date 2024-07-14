@@ -44,5 +44,5 @@ jobs:
           path: ${{ github.workspace }}/usthing-preview.ipa
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
-      - name: Submit to TestFlight
-        run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing-preview.ipa
+      # - name: Submit to TestFlight
+      #   run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing-preview.ipa
