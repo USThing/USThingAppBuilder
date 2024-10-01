@@ -18,8 +18,19 @@ on:
         type: boolean
         description: 'Release?'
         required: false
+      id:
+        type: string
+        description: 'Workflow Run ID'
+        required: false
 
 jobs:
+  id:
+    name: Workflow Run ID
+    runs-on: ubuntu-latest
+    steps:
+      - name: ${{github.event.inputs.id}}
+        run: echo run identifier ${{ inputs.id }}
+
   build-android:
     runs-on: ubuntu-latest
     steps:
