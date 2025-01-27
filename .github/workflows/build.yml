@@ -242,7 +242,7 @@ jobs:
       - build-android
       - build-ios
       - build-android-apk
-    if: ${{ always() }}
+    if: ${{ always() && inputs.pr }}
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
