@@ -86,12 +86,6 @@ jobs:
         id: build
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing-preview.aab
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: preview
-          path: ${{ github.workspace }}/usthing-preview.apk
-
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
       - name: Submit to TestFlight
         if: ${{ inputs.submit == true }}
