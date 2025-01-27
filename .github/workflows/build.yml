@@ -87,7 +87,7 @@ jobs:
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing-preview.aab
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
-      - name: Submit to TestFlight
+      - name: Submit to Google Play
         if: ${{ inputs.submit == true }}
         continue-on-error: ${{ inputs.release == false }}
         run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing-preview.aab
