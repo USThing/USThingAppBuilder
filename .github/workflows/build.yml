@@ -248,7 +248,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.USTHING_GITHUB_TOKEN }}
           RUN_ID: ${{ github.run_id }}
-          REPO: "USThingAppBuilder"
+          REPO: "USThingApp"
           OWNER: "USThing"
           SHA: ${{ inputs.ref }}
           BUILDING: true
@@ -271,7 +271,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.USTHING_GITHUB_TOKEN }}
           RUN_ID: ${{ github.run_id }}
-          REPO: "USThingAppBuilder"
+          REPO: "USThingApp"
           OWNER: "USThing"
           SHA: ${{ inputs.ref }}
           BUILD_ANDROID: ${{ needs.build-android.outputs.build_success }}
