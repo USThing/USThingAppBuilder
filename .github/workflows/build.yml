@@ -250,7 +250,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           REPO: "USThingAppBuilder"
           OWNER: "USThing"
-          COMMIT_SHA: ${{ inputs.ref }}
+          SHA: ${{ inputs.ref }}
           BUILDING: true
   
   report-status-end:
@@ -273,7 +273,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           REPO: "USThingAppBuilder"
           OWNER: "USThing"
-          COMMIT_SHA: ${{ inputs.ref }}
+          SHA: ${{ inputs.ref }}
           BUILD_ANDROID: ${{ needs.build-android.outputs.build_success }}
           BUILD_IOS: ${{ needs.build-ios.outputs.build_success }}
           BUILD_ANDROID_APK: ${{ needs.build-android-apk.outputs.build_success }}
