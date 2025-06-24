@@ -1,0 +1,5 @@
+name: USThing App Builder - Reporter
+description: Reports the build status of the USThing app.
+runs:
+  using: node20
+  main: dist/index.js
