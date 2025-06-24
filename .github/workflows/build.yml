@@ -235,11 +235,9 @@ jobs:
         run: |
           echo "build_success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
 
-  report-status-begin:
+  report-status-create:
     
     runs-on: ubuntu-latest
-    
-    if: ${{ always() }}
     
     steps:
       
@@ -253,7 +251,7 @@ jobs:
           SHA: ${{ inputs.ref }}
           BUILDING: true
   
-  report-status-end:
+  report-status:
     
     runs-on: ubuntu-latest
 
@@ -261,8 +259,6 @@ jobs:
       - build-android
       - build-ios
       - build-android-apk
-    
-    if: ${{ always() }}
     
     steps:
       

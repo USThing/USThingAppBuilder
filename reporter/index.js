@@ -14,16 +14,17 @@ octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
   owner: OWNER,
   repo: REPO,
   sha: SHA,
-  state: BUILDING === "true" ? "pending" : "success",
+  state: BUILDING === "true" ? 
+    "pending" : 
+    (BUILD_ANDROID === "true" && BUILD_IOS === "true" && BUILD_ANDROID_APK === "true" ? "success" : "failure"),
   target_url: `https://github.com/USThing/USThingAppBuilder/actions/runs/${RUN_ID}`,
   description:
     BUILDING === "true" ? (
       "Build in progress..."
     ) : (
-      `#### Build Status of Commit ${SHA}\n\n` +
-      `- Android: ${BUILD_ANDROID === "true" ? "🟢" : "🔴"}\n` +
-      `- iOS: ${BUILD_IOS === "true" ? "🟢" : "🔴"}\n` +
-      `- Android APK: ${BUILD_ANDROID_APK === "true" ? "🟢" : "🔴"}\n`
+      BUILD_ANDROID === "true" && BUILD_IOS === "true" && BUILD_ANDROID_APK === "true" ? 
+        "Build suceeded!" : 
+        "Build failed on one or more platforms. Please check the logs for details."
     ),
   context: "USThing App Builder",
 })
