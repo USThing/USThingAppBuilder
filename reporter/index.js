@@ -20,7 +20,7 @@ octokit.request("POST /repos/{owner}/{repo}/statuses/{sha}", {
     BUILDING === "true" ? (
       "Build in progress..."
     ) : (
-      `#### Build Status of Commit ${COMMIT_SHA}\n\n` +
+      `#### Build Status of Commit ${SHA}\n\n` +
       `- Android: ${BUILD_ANDROID === "true" ? "🟢" : "🔴"}\n` +
       `- iOS: ${BUILD_IOS === "true" ? "🟢" : "🔴"}\n` +
       `- Android APK: ${BUILD_ANDROID_APK === "true" ? "🟢" : "🔴"}\n`
