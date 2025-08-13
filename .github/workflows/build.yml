@@ -211,17 +211,8 @@ jobs:
           'https://static.api.usthing.xyz/v1/apk/latest' \
           -H 'Authorization: Bearer ${{ secrets.ANDROID_APK_RELEASE_KEY }}' \
           -H 'Content-Type: multipart/form-data' \
-          -F 'apk=@${{ github.workspace }}/usthing.apk'
-
-      - name: Submit Version to Production Server
-        if: ${{ inputs.release == true }}
-        run: |
-          curl -X 'POST' \
-          'https://static.api.usthing.xyz/v1/apk/latest/version' \
-          -H 'Authorization: Bearer ${{ secrets.ANDROID_APK_RELEASE_KEY }}' \
-          -H 'Content-Type: application/json' \
-          --data '$(jq '.expo.version' app.json)'
-
+          -F 'apkFile=@${{ github.workspace }}/usthing.apk' \
+          -F 'apkVersion=$(jq '.expo.version' app.json)'
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
