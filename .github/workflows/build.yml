@@ -102,6 +102,11 @@ jobs:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
+      
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: Setup Node
         uses: actions/setup-node@v4
