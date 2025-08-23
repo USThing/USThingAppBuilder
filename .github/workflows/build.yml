@@ -217,7 +217,7 @@ jobs:
           -H 'Authorization: Bearer ${{ secrets.ANDROID_APK_RELEASE_KEY }}' \
           -H 'Content-Type: multipart/form-data' \
           -F 'apkFile=@${{ github.workspace }}/usthing.apk' \
-          -F 'apkVersion=$(jq '.expo.version' app.json)'
+          -F "apkVersion=$(jq '.expo.version' app.json)"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
