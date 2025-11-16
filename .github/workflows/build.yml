@@ -28,16 +28,16 @@ jobs:
     steps:
 
       - name: Setup repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Setup Corepack
         run: |
@@ -45,12 +45,12 @@ jobs:
           corepack install
 
       - name: Setup Yarn Cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           cache: yarn
 
       - name: Setup JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: 17
           distribution: microsoft
@@ -97,7 +97,7 @@ jobs:
     steps:
 
       - name: Setup repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
@@ -109,9 +109,9 @@ jobs:
           xcode-version: 26
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Setup Corepack
         run: |
@@ -162,16 +162,16 @@ jobs:
     steps:
 
       - name: Setup repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Setup Corepack
         run: |
@@ -179,7 +179,7 @@ jobs:
           corepack install
 
       - name: Setup Yarn Cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           cache: yarn
 
