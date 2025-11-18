@@ -54,6 +54,7 @@ jobs:
         with:
           java-version: 17
           distribution: microsoft
+          cache: gradle
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -188,6 +189,7 @@ jobs:
         with:
           java-version: 17
           distribution: microsoft
+          cache: gradle
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
