@@ -54,6 +54,11 @@ jobs:
         with:
           java-version: 17
           distribution: microsoft
+      
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-read-only: false
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -183,6 +188,11 @@ jobs:
         with:
           java-version: 17
           distribution: microsoft
+      
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-read-only: false
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
