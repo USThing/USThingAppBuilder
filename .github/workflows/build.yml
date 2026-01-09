@@ -33,6 +33,15 @@ jobs:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
+          
+      - name: Free Disk Space for Ubuntu
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false # Keep Android tools
+          dotnet: true
+          haskell: true
+          large-packages: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -167,6 +176,15 @@ jobs:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
+          
+      - name: Free Disk Space for Ubuntu
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false # Keep Android tools
+          dotnet: true
+          haskell: true
+          large-packages: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
