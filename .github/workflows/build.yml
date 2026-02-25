@@ -82,16 +82,6 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
-      - name: Prebuild Android
-        run: yarn expo prebuild --platform android
-
-      - name: Override Expo Gradle Defaults
-        run: |
-          sed -i 's/org.gradle.jvmargs=.*/org.gradle.jvmargs=-Xmx6g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:+UseParallelGC -XX:MaxMetaspaceSize=1g/g' android/gradle.properties
-          echo "org.gradle.caching=true" >> android/gradle.properties
-          echo "org.gradle.parallel=true" >> android/gradle.properties
-          echo "org.gradle.configureondemand=true" >> android/gradle.properties
-
       - name: Build
         id: build
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing.aab
@@ -234,16 +224,6 @@ jobs:
 
       - name: Install Dependencies
         run: yarn --immutable
-
-      - name: Prebuild Android
-        run: yarn expo prebuild --platform android
-
-      - name: Override Expo Gradle Defaults
-        run: |
-          sed -i 's/org.gradle.jvmargs=.*/org.gradle.jvmargs=-Xmx6g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:+UseParallelGC -XX:MaxMetaspaceSize=1g/g' android/gradle.properties
-          echo "org.gradle.caching=true" >> android/gradle.properties
-          echo "org.gradle.parallel=true" >> android/gradle.properties
-          echo "org.gradle.configureondemand=true" >> android/gradle.properties
 
       - name: Build
         id: build
