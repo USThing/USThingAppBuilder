@@ -82,6 +82,16 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
+      - name: Login to PostHog
+        if: ${{ inputs.submit == true }}
+        run: |
+          yarn global add @posthog/cli
+          posthog-cli login
+        env:
+          POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+          POSTHOG_CLI_HOST: https://us.posthog.com
+
       - name: Build
         id: build
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing.aab
@@ -141,6 +151,16 @@ jobs:
 
       - name: Install Dependencies
         run: yarn --immutable
+
+      - name: Login to PostHog
+        if: ${{ inputs.submit == true }}
+        run: |
+          yarn global add @posthog/cli
+          posthog-cli login
+        env:
+          POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+          POSTHOG_CLI_HOST: https://us.posthog.com
 
       - name: Build iOS App
         id: build
