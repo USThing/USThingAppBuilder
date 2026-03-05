@@ -80,7 +80,7 @@ jobs:
           eas-version: latest
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: yarn --immutable && npm install -g @posthog/cli
 
       - name: Build
         id: build
@@ -145,7 +145,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install Dependencies
-        run: yarn --immutable
+        run: yarn --immutable && npm install -g @posthog/cli
 
       - name: Build iOS App
         id: build
