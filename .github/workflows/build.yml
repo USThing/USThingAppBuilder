@@ -95,6 +95,11 @@ jobs:
       - name: Build
         id: build
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing.aab
+        env:
+          IS_SUBMIT_BUILD: ${{ inputs.submit }}
+          POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+          POSTHOG_CLI_HOST: https://us.posthog.com
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
       - name: Submit to Google Play
@@ -165,6 +170,11 @@ jobs:
       - name: Build iOS App
         id: build
         run: eas build --profile production --platform ios --local --non-interactive --output ${{ github.workspace }}/usthing.ipa
+        env:
+          IS_SUBMIT_BUILD: ${{ inputs.submit }}
+          POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+          POSTHOG_CLI_HOST: https://us.posthog.com
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
       - name: Submit to TestFlight
