@@ -57,7 +57,7 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v8
+        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
         with:
           token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
@@ -120,11 +120,11 @@ jobs:
           cache: yarn
 
       - name: Setup Expo
-        uses: expo/expo-github-action@v8
+        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
         with:
+          token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
           eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install Dependencies
         run: yarn --immutable && npm install -g @posthog/cli
@@ -192,7 +192,7 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v8
+        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
         with:
           token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
