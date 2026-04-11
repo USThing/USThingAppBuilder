@@ -54,7 +54,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
@@ -189,7 +189,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
