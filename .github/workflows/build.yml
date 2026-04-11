@@ -33,15 +33,6 @@ jobs:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
-          
-      - name: Free Disk Space for Ubuntu
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false # Keep Android tools
-          dotnet: true
-          haskell: true
-          large-packages: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -63,11 +54,6 @@ jobs:
         with:
           java-version: 21
           distribution: microsoft
-      
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-        with:
-          cache-read-only: ${{ github.ref != 'refs/heads/master' }}
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -186,15 +172,6 @@ jobs:
           token: ${{ secrets.USTHING_GITHUB_TOKEN }}
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
-          
-      - name: Free Disk Space for Ubuntu
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false # Keep Android tools
-          dotnet: true
-          haskell: true
-          large-packages: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -216,11 +193,6 @@ jobs:
         with:
           java-version: 21
           distribution: microsoft
-      
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-        with:
-          cache-read-only: ${{ github.ref != 'refs/heads/master' }}
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -265,11 +237,11 @@ jobs:
           echo "build_success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
 
   report-status-create:
-    
+
     runs-on: ubuntu-latest
-    
+
     steps:
-      
+
       - name: Report Status
         uses: USThing/USThingAppBuilder/reporter@main
         env:
@@ -279,21 +251,21 @@ jobs:
           OWNER: "USThing"
           SHA: ${{ inputs.ref }}
           BUILDING: true
-  
+
   report-status:
-    
+
     runs-on: ubuntu-latest
 
     needs:
       - build-android
       - build-ios
       - build-android-apk
-    
+
     # Run this job even if previous jobs fail.
     if: ${{ always() }}
-    
+
     steps:
-      
+
       - name: Report Status
         uses: USThing/USThingAppBuilder/reporter@main
         env:
