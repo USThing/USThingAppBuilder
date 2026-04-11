@@ -50,8 +50,8 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          java-version: 21
-          distribution: microsoft
+          java-version: '17'
+          distribution: 'zulu'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -185,8 +185,8 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          java-version: 21
-          distribution: microsoft
+          java-version: '17'
+          distribution: 'zulu'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
