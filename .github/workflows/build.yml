@@ -38,22 +38,17 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: yarn
 
       - name: Setup Corepack
-        run: |
-          corepack enable
-          corepack install
-
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v6
-        with:
-          cache: yarn
+        run: corepack enable
 
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: microsoft
+          cache: gradle
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -112,16 +107,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: yarn
 
       - name: Setup Corepack
-        run: |
-          corepack enable
-          corepack install
-
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v4
-        with:
-          cache: yarn
+        run: corepack enable
 
       - name: Setup Expo
         uses: expo/expo-github-action@v8
@@ -177,22 +166,17 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: yarn
 
       - name: Setup Corepack
-        run: |
-          corepack enable
-          corepack install
-
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v6
-        with:
-          cache: yarn
+        run: corepack enable
 
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: microsoft
+          cache: gradle
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
