@@ -38,10 +38,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: yarn
 
       - name: Setup Corepack
         run: corepack enable
+
+      - name: Setup Yarn Cache
+        uses: actions/setup-node@v6
+        with:
+          cache: yarn
 
       - name: Setup JDK
         uses: actions/setup-java@v5
@@ -107,10 +111,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: yarn
 
       - name: Setup Corepack
         run: corepack enable
+
+      - name: Setup Yarn Cache
+        uses: actions/setup-node@v6
+        with:
+          cache: yarn
 
       - name: Setup Expo
         uses: expo/expo-github-action@v8
@@ -166,10 +174,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: yarn
 
       - name: Setup Corepack
         run: corepack enable
+
+      - name: Setup Yarn Cache
+        uses: actions/setup-node@v6
+        with:
+          cache: yarn
 
       - name: Setup JDK
         uses: actions/setup-java@v5
