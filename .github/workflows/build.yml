@@ -71,6 +71,7 @@ jobs:
         run: eas build --profile production --platform android --local --non-interactive --output=${{ github.workspace }}/usthing.aab
         env:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
+          IS_RELEASE_BUILD: ${{ inputs.release }}
           POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
           POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
           POSTHOG_CLI_HOST: https://us.posthog.com
@@ -134,6 +135,7 @@ jobs:
         run: eas build --profile production --platform ios --local --non-interactive --output ${{ github.workspace }}/usthing.ipa
         env:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
+          IS_RELEASE_BUILD: ${{ inputs.release }}
           POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
           POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
           POSTHOG_CLI_HOST: https://us.posthog.com
@@ -204,6 +206,9 @@ jobs:
       - name: Build
         id: build
         run: eas build --profile production:apk --platform android --local --non-interactive --output=${{ github.workspace }}/usthing.apk
+        env:
+          IS_SUBMIT_BUILD: ${{ inputs.submit }}
+          IS_RELEASE_BUILD: ${{ inputs.release }}
 
       - name: Setup jq
         uses: dcarbone/install-jq-action@v2
