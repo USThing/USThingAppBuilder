@@ -79,17 +79,17 @@ jobs:
           POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
           POSTHOG_CLI_HOST: https://us.posthog.com
 
-      # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
-      - name: Submit to Google Play
-        if: ${{ inputs.submit == true }}
-        continue-on-error: ${{ inputs.release == false }}
-        run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing.aab
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: usthing.aab
           path: ${{ github.workspace }}/usthing.aab
+
+      # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
+      - name: Submit to Google Play
+        if: ${{ inputs.submit == true }}
+        continue-on-error: ${{ inputs.release == false }}
+        run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing.aab
 
       - name: Result
         id: result
@@ -139,17 +139,17 @@ jobs:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
           IS_RELEASE_BUILD: ${{ inputs.release }}
 
-      # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
-      - name: Submit to TestFlight
-        if: ${{ inputs.submit == true }}
-        continue-on-error: ${{ inputs.release == false }}
-        run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing.ipa
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: usthing.ipa
           path: ${{ github.workspace }}/usthing.ipa
+
+      # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
+      - name: Submit to TestFlight
+        if: ${{ inputs.submit == true }}
+        continue-on-error: ${{ inputs.release == false }}
+        run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing.ipa
 
       - name: Result
         id: result
