@@ -220,12 +220,17 @@ jobs:
       - name: Submit to Production Server
         if: ${{ inputs.release == true }}
         run: |
-          curl -X 'POST' \
+          curl --fail-with-body --show-error --silent \
+          --connect-timeout 30 \
+          --max-time 300 \
+          --retry 3 \
+          --retry-delay 10 \
+          --retry-connrefused \
+          -X POST \
           'https://static.api.usthing.xyz/v1/apk/latest' \
           -H 'Authorization: Bearer ${{ secrets.ANDROID_APK_RELEASE_KEY }}' \
-          -H 'Content-Type: multipart/form-data' \
           -F 'apkFile=@${{ github.workspace }}/usthing.apk' \
-          -F "apkVersion=$(jq '.expo.version' app.json)"
+          -F "apkVersion=$(jq -r '.expo.version' app.json)"
 
       - name: Upload Artifact
         if: ${{ always() && hashFiles('usthing.apk') != '' }}
