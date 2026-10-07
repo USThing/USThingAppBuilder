@@ -3,6 +3,9 @@
 
 name: Build App
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
@@ -22,6 +25,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
     steps:
@@ -85,6 +89,8 @@ jobs:
         with:
           name: usthing.aab
           path: ${{ github.workspace }}/usthing.aab
+          retention-days: 7
+          compression-level: 6
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
       - name: Submit to Google Play
@@ -100,6 +106,7 @@ jobs:
 
   build-ios:
     runs-on: macos-26
+    timeout-minutes: 60
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
     steps:
@@ -145,6 +152,8 @@ jobs:
         with:
           name: usthing.ipa
           path: ${{ github.workspace }}/usthing.ipa
+          retention-days: 7
+          compression-level: 6
 
       # https://docs.expo.dev/submit/ios/#submitting-your-app-using-ci
       - name: Submit to TestFlight
@@ -160,6 +169,7 @@ jobs:
 
   build-android-apk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
     steps:
@@ -235,6 +245,8 @@ jobs:
         with:
           name: usthing.apk
           path: ${{ github.workspace }}/usthing.apk
+          retention-days: 7
+          compression-level: 6
 
       - name: Result
         id: result
@@ -244,6 +256,7 @@ jobs:
 
   report-status-create:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Report pending status
@@ -260,6 +273,7 @@ jobs:
 
   report-status:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     needs:
       - report-status-create
