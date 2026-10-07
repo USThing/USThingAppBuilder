@@ -53,7 +53,9 @@ jobs:
         with:
           path: |
             .yarn/cache
+            ~/.yarn/berry/cache
             ~/.cache/node/corepack/v1
+            ~/Library/Caches/node/corepack/v1
           key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
           restore-keys: |
             yarn-${{ runner.os }}-
@@ -151,7 +153,9 @@ jobs:
         with:
           path: |
             .yarn/cache
+            ~/.yarn/berry/cache
             ~/.cache/node/corepack/v1
+            ~/Library/Caches/node/corepack/v1
           key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
           restore-keys: |
             yarn-${{ runner.os }}-
@@ -161,7 +165,7 @@ jobs:
         with:
           path: |
             ~/Library/Caches/CocoaPods
-            ios/Pods
+            ~/.cocoapods
           key: pods-${{ runner.os }}-${{ hashFiles('yarn.lock', 'package.json', 'app.json', 'eas.json') }}
           restore-keys: |
             pods-${{ runner.os }}-
@@ -233,7 +237,9 @@ jobs:
         with:
           path: |
             .yarn/cache
+            ~/.yarn/berry/cache
             ~/.cache/node/corepack/v1
+            ~/Library/Caches/node/corepack/v1
           key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
           restore-keys: |
             yarn-${{ runner.os }}-
