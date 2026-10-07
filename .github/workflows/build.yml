@@ -80,6 +80,7 @@ jobs:
           POSTHOG_CLI_HOST: https://us.posthog.com
 
       - name: Upload Artifact
+        if: ${{ always() && hashFiles('usthing.aab') != '' }}
         uses: actions/upload-artifact@v7
         with:
           name: usthing.aab
@@ -227,6 +228,7 @@ jobs:
           -F "apkVersion=$(jq '.expo.version' app.json)"
 
       - name: Upload Artifact
+        if: ${{ always() && hashFiles('usthing.apk') != '' }}
         uses: actions/upload-artifact@v7
         with:
           name: usthing.apk
