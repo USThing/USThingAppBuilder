@@ -6,6 +6,10 @@ name: Build App
 permissions:
   contents: read
 
+env:
+  EXPO_NO_TELEMETRY: 1
+  CI: 1
+
 on:
   workflow_dispatch:
     inputs:
@@ -44,16 +48,28 @@ jobs:
       - name: Setup Corepack
         run: corepack enable
 
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v7
+      - name: Cache Yarn
+        uses: actions/cache@v4
         with:
-          cache: yarn
+          path: |
+            .yarn/cache
+            ~/.cache/node/corepack/v1
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
 
       - name: Setup JDK
         uses: actions/setup-java@v6
         with:
           java-version: "17"
           distribution: "zulu"
+
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-key-prefix: gradle-aab-
+          cache-read-only: false
+          add-job-summary: false
 
       - name: Accept Android SDK Licenses
         # android-actions/setup-android@v4 broke on runners with preinstalled
@@ -62,6 +78,16 @@ jobs:
         # ubuntu-latest image already ships the full SDK; only acceptance is
         # needed for EAS local builds.
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+
+      - name: Cache Expo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/expo
+            ~/.expo
+          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
+          restore-keys: |
+            expo-${{ runner.os }}-
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
@@ -82,6 +108,7 @@ jobs:
           POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
           POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
           POSTHOG_CLI_HOST: https://us.posthog.com
+          GRADLE_OPTS: -Dorg.gradle.caching=true -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true
 
       - name: Upload Artifact
         if: ${{ always() && hashFiles('usthing.aab') != '' }}
@@ -119,10 +146,35 @@ jobs:
       - name: Setup Corepack
         run: corepack enable
 
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v7
+      - name: Cache Yarn
+        uses: actions/cache@v4
         with:
-          cache: yarn
+          path: |
+            .yarn/cache
+            ~/.cache/node/corepack/v1
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/CocoaPods
+            ios/Pods
+          key: pods-${{ runner.os }}-${{ hashFiles('yarn.lock', 'package.json', 'app.json', 'eas.json') }}
+          restore-keys: |
+            pods-${{ runner.os }}-
+
+      - name: Cache Expo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/expo
+            ~/.expo
+          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
+          restore-keys: |
+            expo-${{ runner.os }}-
 
       - name: Setup Expo
         uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
@@ -176,16 +228,28 @@ jobs:
       - name: Setup Corepack
         run: corepack enable
 
-      - name: Setup Yarn Cache
-        uses: actions/setup-node@v7
+      - name: Cache Yarn
+        uses: actions/cache@v4
         with:
-          cache: yarn
+          path: |
+            .yarn/cache
+            ~/.cache/node/corepack/v1
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock', '.yarnrc.yml', 'package.json') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
 
       - name: Setup JDK
         uses: actions/setup-java@v6
         with:
           java-version: "17"
           distribution: "zulu"
+
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-key-prefix: gradle-apk-
+          cache-read-only: false
+          add-job-summary: false
 
       - name: Accept Android SDK Licenses
         # android-actions/setup-android@v4 broke on runners with preinstalled
@@ -194,6 +258,16 @@ jobs:
         # ubuntu-latest image already ships the full SDK; only acceptance is
         # needed for EAS local builds.
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+
+      - name: Cache Expo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/expo
+            ~/.expo
+          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
+          restore-keys: |
+            expo-${{ runner.os }}-
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
@@ -211,6 +285,7 @@ jobs:
         env:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
           IS_RELEASE_BUILD: ${{ inputs.release }}
+          GRADLE_OPTS: -Dorg.gradle.caching=true -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true
 
       - name: Submit to Production Server
         if: ${{ inputs.release == true }}
