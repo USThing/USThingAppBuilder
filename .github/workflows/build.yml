@@ -214,9 +214,6 @@ jobs:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
           IS_RELEASE_BUILD: ${{ inputs.release }}
 
-      - name: Setup jq
-        uses: dcarbone/install-jq-action@v2
-
       - name: Submit to Production Server
         if: ${{ inputs.release == true }}
         run: |
