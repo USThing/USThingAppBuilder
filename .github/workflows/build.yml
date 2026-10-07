@@ -98,12 +98,6 @@ jobs:
         continue-on-error: ${{ inputs.release == false }}
         run: eas submit --profile production --platform android --non-interactive --path ${{ github.workspace }}/usthing.aab
 
-      - name: Result
-        id: result
-        if: ${{ always() }}
-        run: |
-          echo "build_success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
-
   build-ios:
     runs-on: macos-26
     timeout-minutes: 60
@@ -160,12 +154,6 @@ jobs:
         if: ${{ inputs.submit == true }}
         continue-on-error: ${{ inputs.release == false }}
         run: eas submit --profile production --platform ios --non-interactive --path ${{ github.workspace }}/usthing.ipa
-
-      - name: Result
-        id: result
-        if: ${{ always() }}
-        run: |
-          echo "build_success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
 
   build-android-apk:
     runs-on: ubuntu-latest
@@ -248,19 +236,21 @@ jobs:
           retention-days: 7
           compression-level: 6
 
-      - name: Result
-        id: result
-        if: ${{ always() }}
-        run: |
-          echo "build_success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
-
   report-status-create:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     steps:
+      - name: Setup repo
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.USTHING_GITHUB_TOKEN }}
+          ref: ${{ inputs.ref }}
+          repository: USThing/USThingApp
+
       - name: Report pending status
         run: |
+          SHA=$(git rev-parse HEAD)
           gh api --method POST "repos/USThing/USThingApp/statuses/$SHA" \
             -f state=pending \
             -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
@@ -269,7 +259,6 @@ jobs:
             --silent
         env:
           GH_TOKEN: ${{ secrets.USTHING_GITHUB_TOKEN }}
-          SHA: ${{ inputs.ref }}
 
   report-status:
     runs-on: ubuntu-latest
@@ -285,8 +274,16 @@ jobs:
     if: ${{ always() }}
 
     steps:
+      - name: Setup repo
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.USTHING_GITHUB_TOKEN }}
+          ref: ${{ inputs.ref }}
+          repository: USThing/USThingApp
+
       - name: Report final status
         run: |
+          SHA=$(git rev-parse HEAD)
           if [[ "$BUILD_ANDROID" == true && "$BUILD_IOS" == true && "$BUILD_ANDROID_APK" == true ]]; then
             state=success
             description='Build succeeded!'
@@ -303,7 +300,6 @@ jobs:
             --silent
         env:
           GH_TOKEN: ${{ secrets.USTHING_GITHUB_TOKEN }}
-          SHA: ${{ inputs.ref }}
           BUILD_ANDROID: ${{ needs.build-android.outputs.build_success }}
           BUILD_IOS: ${{ needs.build-ios.outputs.build_success }}
           BUILD_ANDROID_APK: ${{ needs.build-android-apk.outputs.build_success }}
