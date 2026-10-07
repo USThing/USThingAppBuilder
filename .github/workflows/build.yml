@@ -239,6 +239,8 @@ jobs:
   report-status-create:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    outputs:
+      sha: ${{ steps.resolve.outputs.sha }}
 
     steps:
       - name: Setup repo
@@ -248,10 +250,13 @@ jobs:
           ref: ${{ inputs.ref }}
           repository: USThing/USThingApp
 
+      - name: Resolve SHA
+        id: resolve
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Report pending status
         run: |
-          SHA=$(git rev-parse HEAD)
-          gh api --method POST "repos/USThing/USThingApp/statuses/$SHA" \
+          gh api --method POST "repos/USThing/USThingApp/statuses/${{ steps.resolve.outputs.sha }}" \
             -f state=pending \
             -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
             -f description='Build in progress...' \
@@ -274,16 +279,12 @@ jobs:
     if: ${{ always() }}
 
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.USTHING_GITHUB_TOKEN }}
-          ref: ${{ inputs.ref }}
-          repository: USThing/USThingApp
-
       - name: Report final status
         run: |
-          SHA=$(git rev-parse HEAD)
+          if [[ -z "$SHA" ]]; then
+            echo "::error::resolved SHA is empty (report-status-create failed?), cannot post status."
+            exit 1
+          fi
           if [[ "$BUILD_ANDROID" == true && "$BUILD_IOS" == true && "$BUILD_ANDROID_APK" == true ]]; then
             state=success
             description='Build succeeded!'
@@ -300,6 +301,7 @@ jobs:
             --silent
         env:
           GH_TOKEN: ${{ secrets.USTHING_GITHUB_TOKEN }}
+          SHA: ${{ needs.report-status-create.outputs.sha }}
           BUILD_ANDROID: ${{ needs.build-android.outputs.build_success }}
           BUILD_IOS: ${{ needs.build-ios.outputs.build_success }}
           BUILD_ANDROID_APK: ${{ needs.build-android-apk.outputs.build_success }}
