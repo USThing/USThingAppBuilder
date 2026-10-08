@@ -49,7 +49,7 @@ jobs:
         run: corepack enable
 
       - name: Cache Yarn
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .yarn/cache
@@ -67,11 +67,10 @@ jobs:
           distribution: "zulu"
 
       - name: Setup Gradle cache
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
-          cache-key-prefix: gradle-aab-
           cache-read-only: false
-          add-job-summary: false
+          add-job-summary: 'never'
 
       - name: Accept Android SDK Licenses
         # android-actions/setup-android@v4 broke on runners with preinstalled
@@ -82,7 +81,7 @@ jobs:
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
 
       - name: Cache Expo
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cache/expo
@@ -92,7 +91,7 @@ jobs:
             expo-${{ runner.os }}-
 
       - name: Setup Expo and EAS
-        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
+        uses: expo/expo-github-action@v9
         with:
           token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
@@ -149,7 +148,7 @@ jobs:
         run: corepack enable
 
       - name: Cache Yarn
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .yarn/cache
@@ -161,7 +160,7 @@ jobs:
             yarn-${{ runner.os }}-
 
       - name: Cache CocoaPods
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/Library/Caches/CocoaPods
@@ -171,7 +170,7 @@ jobs:
             pods-${{ runner.os }}-
 
       - name: Cache Expo
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cache/expo
@@ -181,7 +180,7 @@ jobs:
             expo-${{ runner.os }}-
 
       - name: Setup Expo
-        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
+        uses: expo/expo-github-action@v9
         with:
           token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
@@ -233,7 +232,7 @@ jobs:
         run: corepack enable
 
       - name: Cache Yarn
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .yarn/cache
@@ -251,11 +250,10 @@ jobs:
           distribution: "zulu"
 
       - name: Setup Gradle cache
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
-          cache-key-prefix: gradle-apk-
           cache-read-only: false
-          add-job-summary: false
+          add-job-summary: 'never'
 
       - name: Accept Android SDK Licenses
         # android-actions/setup-android@v4 broke on runners with preinstalled
@@ -266,7 +264,7 @@ jobs:
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
 
       - name: Cache Expo
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cache/expo
@@ -276,7 +274,7 @@ jobs:
             expo-${{ runner.os }}-
 
       - name: Setup Expo and EAS
-        uses: expo/expo-github-action@b184ff86a3c926240f1b6db41764c83a01c02eef
+        uses: expo/expo-github-action@v9
         with:
           token: ${{ secrets.EXPO_TOKEN }}
           expo-version: latest
