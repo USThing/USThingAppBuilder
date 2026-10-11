@@ -179,6 +179,17 @@ jobs:
           restore-keys: |
             expo-${{ runner.os }}-
 
+      - name: Cache ccache (iOS)
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Caches/ccache
+            ~/.ccache
+            ~/.cache/ccache
+          key: ccache-ios-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
+          restore-keys: |
+            ccache-ios-${{ runner.os }}-
+
       - name: Setup Expo
         uses: expo/expo-github-action@v9
         with:
@@ -195,6 +206,7 @@ jobs:
         env:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
           IS_RELEASE_BUILD: ${{ inputs.release }}
+          CCACHE_MAXSIZE: 1G
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
