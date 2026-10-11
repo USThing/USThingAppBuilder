@@ -80,16 +80,6 @@ jobs:
         # needed for EAS local builds.
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
 
-      - name: Cache Expo
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.cache/expo
-            ~/.expo
-          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
-          restore-keys: |
-            expo-${{ runner.os }}-
-
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v9
         with:
@@ -169,16 +159,6 @@ jobs:
           restore-keys: |
             pods-${{ runner.os }}-
 
-      - name: Cache Expo
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.cache/expo
-            ~/.expo
-          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
-          restore-keys: |
-            expo-${{ runner.os }}-
-
       - name: Cache ccache (iOS)
         uses: actions/cache@v6
         with:
@@ -206,7 +186,7 @@ jobs:
         env:
           IS_SUBMIT_BUILD: ${{ inputs.submit }}
           IS_RELEASE_BUILD: ${{ inputs.release }}
-          CCACHE_MAXSIZE: 1G
+          CCACHE_MAXSIZE: 500M
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
@@ -274,16 +254,6 @@ jobs:
         # ubuntu-latest image already ships the full SDK; only acceptance is
         # needed for EAS local builds.
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
-
-      - name: Cache Expo
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.cache/expo
-            ~/.expo
-          key: expo-${{ runner.os }}-${{ hashFiles('yarn.lock', 'app.json', 'package.json', 'eas.json') }}
-          restore-keys: |
-            expo-${{ runner.os }}-
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v9
