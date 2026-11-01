@@ -88,7 +88,7 @@ jobs:
           eas-version: latest
 
       - name: Install Dependencies
-        run: yarn --immutable && npm install -g @posthog/cli
+        run: yarn --immutable && npm install -g --allow-scripts=@posthog/cli @posthog/cli
 
       # Build the AAB and APK in one Gradle run so they share compilation, R8,
       # and NDK work. EAS resolves `gradleCommand` from eas.json at CLI time, so
@@ -223,7 +223,7 @@ jobs:
           eas-version: latest
 
       - name: Install Dependencies
-        run: yarn --immutable && npm install -g @posthog/cli
+        run: yarn --immutable && npm install -g --allow-scripts=@posthog/cli @posthog/cli
 
       - name: Build iOS App
         id: build
