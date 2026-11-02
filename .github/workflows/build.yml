@@ -162,7 +162,7 @@ jobs:
           -F "apkVersion=$(jq -r '.expo.version' app.json)"
 
   build-ios:
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
