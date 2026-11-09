@@ -29,7 +29,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 180
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
     steps:
@@ -163,7 +163,7 @@ jobs:
 
   build-ios:
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 180
     outputs:
       build_success: ${{ steps.build.outcome == 'success' }}
     steps:
@@ -278,7 +278,7 @@ jobs:
 
   report-status:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 180
 
     needs:
       - report-status-create
